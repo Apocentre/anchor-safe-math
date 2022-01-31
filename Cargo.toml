@@ -8,7 +8,7 @@ description = "Safe Math wrapper for the primitive numberic types used in an Anc
 license = "MIT"
 homepage = "https://github.com/Apocentre/anchor-safe-math"
 documentation = ""
-readme = "https://github.com/Apocentre/anchor-safe-math/README.md"
+readme = "https://github.com/Apocentre/anchor-safe-math/blob/main/README.md"
 keywords = ["solana", "anchor"]
 license-file = "LICENSE.txt"
 
