@@ -6,7 +6,7 @@
 //! # Examples
 //!
 //! ```
-//! use anchor_lang::prelude::*;
+//! use anchor_lang::prelude::;
 //! use safe_math::{SafeMath};
 //! 
 //! #[program]
@@ -30,7 +30,12 @@
 //!   ...
 //! }
 //! ```
-use anchor_lang::prelude::*;
+use anchor_lang::prelude::{
+  error,
+  thiserror,
+  ProgramError,
+};
+
 use std::{
   result::Result as StdResult
 };
