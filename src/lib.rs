@@ -7,7 +7,7 @@
 //!
 //! ```
 //! use anchor_lang::prelude::;
-//! use safe_math::{SafeMath};
+//! use anchor_safe_math::{SafeMath};
 //! 
 //! #[program]
 //! pub mod example {
