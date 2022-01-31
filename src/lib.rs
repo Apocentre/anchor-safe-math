@@ -1,9 +1,14 @@
+//! # Anchor Safe Math
+//!
+//! `anchor_safe_math` is a collection of helper numeric operation functions that removes the 
+//! verbosity of checking for overflow, underflow and division by zero errors.
 use anchor_lang::prelude::*;
 use std::{
   result::Result as StdResult
 };
 
 #[error]
+/// Errors that can be triggered by executing one of the supported numeric operations
 pub enum ErrorCode {
   #[msg("overflow")]
   Overflow,
@@ -13,7 +18,35 @@ pub enum ErrorCode {
   DivisionByZero,
 }
 
-// Third alternative solution is to extend the types with the custom trait
+/// Defines a set of safe math operations that return a `ProgramError` which is expected in an anchor instruction execution.
+/// 
+/// # Examples
+///
+/// ```
+/// use anchor_lang::prelude::*;
+/// use safe_math::{SafeMath};
+/// 
+/// #[program]
+/// pub mod example {
+///   use super::*;
+/// 
+///   pub fn instruction(ctx: Context<Instruction>, amount: u64) -> ProgramResult {
+///     let state = &mut ctx.accounts.state;
+/// 
+///     // You can apply any of the following operations
+///     state.total_amount = state.total_amount.safe_add(amount)?;
+///     state.total_amount = state.total_amount.safe_sub(amount)?;
+///     state.total_amount = state.total_amount.safe_mul(amount)?;
+///     state.total_amount = state.total_amount.safe_div(amount)?;
+///     state.total_amount = state.total_amount.safe_pow(8_u32)?;
+///   }
+/// }
+/// 
+/// #[derive(Accounts)]
+/// pub struct Instruction<'info> {
+///   ...
+/// }
+/// ```
 pub trait SafeMath {
   type Output;
 
@@ -26,6 +59,7 @@ pub trait SafeMath {
 
 macro_rules! safe_math {
   ($type: ident) => {
+    /// $type implementation of the SafeMath trait
     impl SafeMath for $type {
       type Output = $type;
 
