@@ -32,7 +32,7 @@
 //! ```
 use anchor_lang::prelude::{
   error,
-  thiserror,
+  error_code,
   ProgramError,
 };
 
@@ -40,7 +40,7 @@ use std::{
   result::Result as StdResult
 };
 
-#[error]
+#[error_code]
 /// Errors that can be triggered by executing one of the supported numeric operations
 pub enum ErrorCode {
   #[msg("overflow")]
@@ -71,35 +71,35 @@ macro_rules! safe_math {
       fn safe_add(&self, rhs: Self::Output) -> StdResult<Self::Output, ProgramError> {
         match self.checked_add(rhs) {
           Some(result) => Ok(result),
-          None => return Err(ErrorCode::Overflow.into())
+          None => return Err(error!(ErrorCode::Overflow).into())
         }
       }
     
       fn safe_sub(&self, rhs: Self::Output) -> StdResult<Self::Output, ProgramError> {
         match self.checked_sub(rhs) {
           Some(result) => Ok(result),
-          None => return Err(ErrorCode::Underflow.into())
+          None => return Err(error!(ErrorCode::Underflow).into())
         }
       }
 
       fn safe_mul(&self, rhs: Self::Output) -> StdResult<Self::Output, ProgramError> {
         match self.checked_mul(rhs) {
           Some(result) => Ok(result),
-          None => return Err(ErrorCode::Underflow.into())
+          None => return Err(error!(ErrorCode::Underflow).into())
         }
       }
 
       fn safe_div(&self, rhs: Self::Output) -> StdResult<Self::Output, ProgramError> {
         match self.checked_div(rhs) {
           Some(result) => Ok(result),
-          None => return Err(ErrorCode::DivisionByZero.into())
+          None => return Err(error!(ErrorCode::DivisionByZero).into())
         }
       }
 
       fn safe_pow(&self, exp: u32) -> StdResult<Self::Output, ProgramError> {
         match self.checked_pow(exp) {
           Some(result) => Ok(result),
-          None => return Err(ErrorCode::Overflow.into())
+          None => return Err(error!(ErrorCode::Overflow).into())
         }
       }
     }
