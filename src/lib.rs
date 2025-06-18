@@ -31,14 +31,9 @@
 //! }
 //! ```
 use anchor_lang::prelude::{
-  error,
-  error_code,
-  ProgramError,
+  error, error_code, ProgramError,
 };
-
-use std::{
-  result::Result as StdResult
-};
+use std::result::Result as StdResult;
 
 #[error_code]
 /// Errors that can be triggered by executing one of the supported numeric operations
